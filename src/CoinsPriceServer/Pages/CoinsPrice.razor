@@ -1,0 +1,39 @@
+﻿@page "/coinsprice"
+
+
+@inherits CoinsPriceBase
+
+<h1>Coin Prices</h1>
+
+<p>This page show real time price of some crypto currencies</p>
+
+@if (CoinsPrice == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Coin</th>
+                <th>Price (US$)</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var coin in CoinsPrice)
+            {
+            <tr>
+
+                <td>@coin.Symbol</td>
+                <td>@coin.CoinName</td>
+                <td>@($"{coin.Price:C}") </td>
+                <td>@coin.Date.ToShortDateString()</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
