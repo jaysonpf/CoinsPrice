@@ -33,11 +33,19 @@ namespace CoinsPriceServer.Core.Providers
 
             url.Query = queryString.ToString();
 
-            _httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", ApiKey);
-            _httpClient.DefaultRequestHeaders.Add("Accepts", "application/json");
+            var httpRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = url.Uri,
+                Headers =
+                {
+                    {"X-CMC_PRO_API_KEY", ApiKey},
+                    {"Accepts", "application/json"},
+                }
+            };
 
             string responseJson;
-            using (var response = await _httpClient.GetAsync(url.Uri))
+            using (var response = await _httpClient.SendAsync(httpRequest))
             {
                 responseJson = await response.Content.ReadAsStringAsync();
             }
